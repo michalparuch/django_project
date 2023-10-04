@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} | OLX</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+<body>
+<header class="nav_bar">
+  <div class="logo-container">
+    <a href="/" class="logo">Niby OLX ( ͡° ͜ʖ ͡°) </a>
+    <div class="discord-dropdown">
+      <label class="discord-dropdown-trigger">Browse categories ▼</label>
+      <ul class="discord-dropdown-menu">
+        <li><a href="{% url 'clothes-category' %}">Clothes</a></li>
+        <li><a href="{% url 'electronics-category' %}">Electronics</a></li>
+        <li><a href="{% url 'sport-category' %}">Sport</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="nav_links">
+    {% if request.user.is_authenticated %}
+    <div class="menu_links">
+      <a href="{% url 'add-item' %}" class="nav_link">Add item</a>
+      <a href="{% url 'browse' %}" class="nav_link">Browse</a>
+      <a href="{% url 'dashboard' %}" class="cta_button-dashboard">Your Items</a>
+        <a href="{% url 'room_list' %}" class="cta_button">Conversations</a>
+      <a href="{% url 'user-logout' %}" class="cta_button">Logout</a>
+    </div>
+    {% else %}
+    <div class="cta_buttons">
+      <a href="{% url 'login' %}" class="cta_button">Log in</a>
+      <a href="{% url 'create-user' %}" class="cta_button">Sign Up</a>
+    </div>
+    {% endif %}
+  </div>
+</header>
+{% block content %}
+{% endblock %}
+<footer class="footer">
+    <div class="social_links">
+        <a href="#" class="social_link">Facebook</a>
+        <a href="#" class="social_link">Instagram</a>
+        <a href="#" class="social_link">Twitter</a>
+    </div>
+    <div class="footer_links">
+        <a href="#" class="footer_link">About</a>
+        <a href="#" class="footer_link">Contact & Support</a>
+        <a href="#" class="footer_link">Terms of use</a>
+        <a href="#" class="footer_link">Privacy policy</a>
+    </div>
+</footer>
+</body>
+</html>

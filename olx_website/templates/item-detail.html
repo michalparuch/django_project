@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{item.title}} {% endblock %}
+{% block content %}
+<div class="item-detail-view-container">
+  <h1 class="item-detail-title">{{ item.title }}</h1>
+  <div class="item-detail-img-container">
+    {% if item.image %}
+    <img src="{{ item.image.url }}" class="item-detail-img">
+    {% else %}
+    <img src="{% static 'images/default_image.jpg' %}" class="item-detail-img" alt="Domyślne zdjęcie">
+    {% endif %}
+  </div>
+  <div>
+    <h2 class="item-detail-price">Price: {{ item.price}} $</h2>
+    <h3 class="item-detail-condition">Item condition: {{ item.condition }}</h3>
+    <p class="item-detail-created_by">Item category: {{ item.category }}</p>
+    <h4 class="item-detail-description-header">Item description:</h4>
+    <p class="item-detail-description">{{ item.description }}</p>
+    <p class="item-detail-created_by">Listing created by: {{ item.created_by }}</p>
+    <p class="item-detail-created_at">Listing created at: {{ item.created_at }}</p>
+  </div>
+  <div class="item-detail-cta_buttons">
+    {% if request.user == item.created_by %}
+    <a href="{% url 'delete-item' item.id %}" class="item-detail-cta_button">Delete</a>
+    <a href="{% url 'update-item' item.id %}" class="item-detail-cta_button">Edit</a>
+    {% else %}
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'create_room' pk=item.id %}" class="item-detail-cta_button">Contact Seller</a>
+    {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

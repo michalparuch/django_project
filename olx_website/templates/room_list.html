@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} My Conversations {% endblock %}
+{% block content %}
+<h1 class="rooms-title">My Rooms</h1>
+<div class="new_room">
+
+<h2 class="conversations-title">Seller Conversations:</h2>
+{% for room in seller_rooms %}
+  <div class="room">
+    <div class="inside-room">
+      <p class="room-info">Item: {{ room.item }}</p>
+      <p class="room-info">Buyer: {{ room.buyer }}</p>
+    </div>
+    <div class="inside-room">
+      <img src="{{ room.item.image.url }}" alt="Item Image" class="room-image">
+    </div>
+    <div class="inside-room">
+      <p><a href="{% url 'room_detail' room.id %}" class="room-link">Go to Room</a></p>
+    </div>
+  </div>
+{% empty %}
+  <p>No seller rooms available.</p>
+{% endfor %}
+
+<h2 class="conversations-title">Buyer Conversations:</h2>
+{% for room in buyer_rooms %}
+  <div class="room">
+    <div class="inside-room">
+      <p class="room-info">Item: {{ room.item }}</p>
+      <p class="room-info">Seller: {{ room.seller }}</p>
+    </div>
+    <div class="inside-room">
+      <img src="{{ room.item.image.url }}" alt="Item Image" class="room-image">
+    </div>
+    <div class="inside-room">
+      <p><a href="{% url 'room_detail' room.id %}" class="room-link">Go to Room</a></p>
+    </div>
+  </div>
+{% empty %}
+  <p>No buyer rooms available.</p>
+{% endfor %}
+
+</div>
+
+{% endblock %}

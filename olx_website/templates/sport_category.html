@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Dashboard {% endblock %}
+{% block content %}
+<div class="item-container">
+    <h1> Sport Items </h1>
+
+    <div class="item-list">
+        {% for item in items %}
+        <div class="item">
+            <a href="{% url 'item-detail' item.id %}">
+                <div class="item-image">
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="item-img">
+                    {% else %}
+                        <img src="{% static 'images/default_image.jpg' %}" class="item-img" alt="Domyślne zdjęcie">
+                    {% endif %}
+                </div>
+                <div class="item-details">
+                    <h2 class="item-title">{{ item.title }}</h2>
+                    <p class="item-price">Price: {{ item.price }} $</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+</div>
+{% endblock %}

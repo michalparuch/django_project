@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Conversation Room for {{ messages.room.item.title }}{% endblock %}
+{% block content %}
+  <h1 class="conversation-title">Conversation</h1>
+
+  <div class="room-detail-container">
+    <div class="room-messages">
+      {% for message in messages %}
+        <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+          <p>{{ message.content }}</p>
+          <p class="message-sender">From: {{ message.sender }}</p>
+          <p class="message-timestamp">Timestamp: {{ message.timestamp }}</p>
+        </div>
+      {% empty %}
+        <p>No messages available.</p>
+      {% endfor %}
+    </div>
+
+   <h2>New Message</h2>
+<div class="new_room">
+<form method="post" action=".">
+    {% csrf_token %}
+
+    <div class="new-room-form">
+        {{ form.content }}
+        <div class="new-room-btn-container">
+            <button class="new-room-send-btn">Send</button>
+        </div>
+    </div>
+
+    {% if form.errors or form.non_field_errors %}
+        <div class="new-room-errors">
+            {% for field in form %}
+                {{ field.errors }}
+            {% endfor %}
+
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+</form>
+    </div>
+  </div>
+{% endblock %}
